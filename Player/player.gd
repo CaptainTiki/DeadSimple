@@ -1,6 +1,10 @@
 extends CharacterBody3D
 
 @export var move_speed: float = 5.0
+@export var fire_rate: float = 0.2  # Seconds between shots
+
+var bullet_scene = preload("res://Projectiles/bullet.tscn")
+var time_since_last_shot: float = 0.0
 
 func _physics_process(delta: float):
 	if StateManager.is_paused:
@@ -12,16 +16,24 @@ func _physics_process(delta: float):
 		Input.get_axis("move_down", "move_up")  # Invert if up should be positive Y
 	).normalized()
 	
-	var boost_multiplier = 1.5 if Input.is_action_pressed("boost") else 1.0
-	
-	velocity.x = input_dir.x * move_speed * boost_multiplier
-	velocity.y = input_dir.y * move_speed * boost_multiplier
+	velocity.x = input_dir.x * move_speed
+	velocity.y = input_dir.y * move_speed
 	velocity.z = 0  # Locked Z
 	
 	move_and_slide()
 	
-	# Stub for fire and dodge
-	if Input.is_action_just_pressed("fire"):
-		print("Fire!")  # Instance bullet later
+	# Handle firing
+	time_since_last_shot += delta
+	if Input.is_action_pressed("fire") and time_since_last_shot >= fire_rate:
+		fire_bullet()
+		time_since_last_shot = 0.0
+	
 	if Input.is_action_just_pressed("dodge"):
 		print("Dodge!")  # Quick burst later
+
+func fire_bullet():
+	var bullet = bullet_scene.instantiate()
+	# Add bullet to the play area (parent) to match coordinate space
+	get_parent().add_child(bullet)
+	# Position bullet slightly in front of player (negative Z)
+	bullet.position = position + Vector3(1, 0, 0)
