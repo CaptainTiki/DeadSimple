@@ -31,4 +31,5 @@ func _on_area_entered(area: Area3D):
 		StateManager.game_data.score += 100  # Increment score
 		StateManager.game_manager.update_hud()  # Update HUD
 		queue_free()
-		area.queue_free()
+		if area is Bullet:
+			area._despawn()

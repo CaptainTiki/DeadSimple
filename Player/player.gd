@@ -8,12 +8,19 @@ class_name PlayerShip
 @export var shield_recharge_rate: float = 5.0  # Shields per second
 @export var shield_recharge_delay: float = 2.0  # Seconds before recharge starts
 
+@onready var muzzle: Node3D = $Muzzle
+@onready var weapons_root: Node3D = $Weapons
+
+var trigger_held: bool = false
+
 var bullet_scene = preload("res://Projectiles/bullet.tscn")
 var time_since_last_shot: float = 0.0
 var current_shields: float = 100.0
 var current_health: float = 30.0
 var no_hit_timer: float = 0.0
 var flash_tween: Tween
+
+var fire_cooldown: float = 0.0             # time left until next shot
 
 signal damage_taken
 
@@ -36,11 +43,11 @@ func _physics_process(delta: float):
 	
 	move_and_slide()
 	
-	# Handle firing
-	time_since_last_shot += delta
-	if Input.is_action_pressed("fire") and time_since_last_shot >= fire_rate:
-		fire_bullet()
-		time_since_last_shot = 0.0
+	trigger_held = Input.is_action_pressed("fire")
+	# notify children (fast: no signals needed)
+	for weapon in weapons_root.get_children():
+		if weapon.has_method("set_trigger"):
+			weapon.set_trigger(trigger_held, delta)
 	
 	if Input.is_action_just_pressed("dodge"):
 		print("Dodge!")  # Quick burst later
@@ -52,10 +59,27 @@ func _physics_process(delta: float):
 			current_shields += shield_recharge_rate * delta
 			current_shields = min(current_shields, max_shields)
 
-func fire_bullet():
-	var bullet = bullet_scene.instantiate()
-	get_parent().add_child(bullet)
-	bullet.position = position + Vector3(1, 0, 0)
+func fire_bullet() -> void:
+	print("player.gd - fire bullet")
+	# Get an inactive bullet from the BulletPool
+	var new_bullet: Node = PoolManager.acquire_bullet()
+	if new_bullet == null:
+		# Pool empty or capped → skip this frame
+		print("player.gd - skipped")
+		return
+
+	# Define the bullet’s direction
+	var direction: Vector3 = Vector3.RIGHT
+
+	# Rotate the bullet sprite to match its direction
+	#TODO: rotate the bullet to face the direction of travel
+	
+	# Call the bullet’s fire() method to activate it
+	new_bullet.call(
+		"fire",
+		muzzle.global_position,        # start position
+		direction * new_bullet.speed       # velocity vector
+	)
 
 func _on_body_entered(body: Node3D):
 	if body.is_in_group("enemy"):

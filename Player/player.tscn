@@ -40,14 +40,14 @@ size = Vector3(0.38789064, 0.1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2419242, 0.014556885, 0.18402082)
 size = Vector3(0.38789064, 0.1, 1)
 
-[node name="Node3D" type="Node3D" parent="."]
-
 [node name="HitBox" type="Area3D" parent="." groups=["playership"]]
 collision_mask = 304
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0065307617, 0.08505249, -0.0011291504)
 shape = SubResource("BoxShape3D_4ntmi")
+
+[node name="Weapons" type="Node3D" parent="."]
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_body_entered"]

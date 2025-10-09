@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 StateManager="*res://System/state_manager.gd"
+PoolManager="*res://System/pool_manager.gd"
 
 [global_group]
 
@@ -74,3 +75,4 @@ fire={
 3d_physics/layer_6="EnemyProjectiles"
 3d_physics/layer_9="Terrain"
 3d_physics/layer_10="Activations"
+3d_physics/layer_18="WorldBorders"

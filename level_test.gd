@@ -5,6 +5,15 @@ class_name Level
 @onready var play_area: Node3D = $PlayArea
 
 @onready var player: CharacterBody3D = %Player
+@onready var bullets_node: Node3D = $Bullets
+
+func _ready() -> void:
+	PoolManager.setup_bullets(
+		preload("res://Projectiles/bullet.tscn"),  # your bullet scene
+		bullets_node,
+		200,    # initial bullets
+		600     # cap (0 = unlimited)
+	)
 
 func _physics_process(delta: float):
 	if StateManager.is_paused:

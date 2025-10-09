@@ -24,7 +24,8 @@ func _physics_process(delta: float):
 func _on_area_entered(area: Area3D):
 	if area.is_in_group("bullet"):
 		health -= 1
-		area.queue_free()  # Destroy the bullet
+		if area is Bullet:
+			area._despawn()
 		if health <= 0:
 			spawn_small_asteroids()
 			StateManager.game_data.score += 200  # Increment score for large rock
