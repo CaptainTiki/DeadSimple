@@ -5,8 +5,6 @@ var asteroid_scene = preload("res://Objects/Rock.tscn")
 var angular_velocity: Vector3
 
 func _ready():
-	# Connect collision signal
-	area_entered.connect(_on_area_entered)
 	# Set random angular velocity for each axis (radians per second)
 	angular_velocity = Vector3(
 		randf_range(0.1, 0.3) * (1 if randi() % 2 == 0 else -1),
@@ -29,6 +27,8 @@ func _on_area_entered(area: Area3D):
 		area.queue_free()  # Destroy the bullet
 		if health <= 0:
 			spawn_small_asteroids()
+			StateManager.game_data.score += 200  # Increment score for large rock
+			StateManager.game_manager.update_hud()  # Update HUD
 			queue_free()
 
 func spawn_small_asteroids():

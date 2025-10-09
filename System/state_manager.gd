@@ -45,5 +45,10 @@ func toggle_pause():
 	get_tree().paused = is_paused
 	emit_signal("pause_toggled", is_paused)
 
+func unpause():
+	is_paused = false
+	get_tree().paused = is_paused
+	emit_signal("pause_toggled", is_paused)
+
 func get_current_state() -> State:
 	return current_state

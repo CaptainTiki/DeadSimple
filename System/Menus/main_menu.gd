@@ -4,8 +4,7 @@ extends Control
 @onready var quit_button: Button = $Menu/VBoxContainer/QuitButton
 
 func _ready():
-	play_button.connect("pressed", _on_play_pressed)
-	quit_button.connect("pressed", _on_quit_pressed)
+	pass
 
 func _on_play_pressed():
 	StateManager.set_state(StateManager.State.PLAY)

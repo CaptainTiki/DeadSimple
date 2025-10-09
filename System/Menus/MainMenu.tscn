@@ -37,3 +37,6 @@ text = "Play"
 [node name="QuitButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[connection signal="pressed" from="Menu/VBoxContainer/PlayButton" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]

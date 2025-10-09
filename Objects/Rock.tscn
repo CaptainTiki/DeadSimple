@@ -5,8 +5,8 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_ihx5k"]
 radius = 0.55
 
-[node name="Rock" type="Area3D"]
-collision_layer = 32
+[node name="Rock" type="Area3D" groups=["rock"]]
+collision_layer = 256
 collision_mask = 3
 script = ExtResource("1_ihx5k")
 

@@ -1,10 +1,10 @@
 extends Node3D
+class_name Level
 
 @export var play_speed: float = 2.0
-
 @onready var play_area: Node3D = $PlayArea
-@onready var camera: Camera3D = $Camera3D
-@onready var player: CharacterBody3D = $PlayArea/Player
+
+@onready var player: CharacterBody3D = %Player
 
 func _physics_process(delta: float):
 	if StateManager.is_paused:

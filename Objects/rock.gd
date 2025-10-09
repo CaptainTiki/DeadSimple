@@ -5,8 +5,6 @@ var velocity: Vector3 = Vector3.ZERO
 var angular_velocity: Vector3
 
 func _ready():
-	# Connect collision signal
-	area_entered.connect(_on_area_entered)
 	# Set random angular velocity for each axis (radians per second)
 	angular_velocity = Vector3(
 		randf_range(0.1, 0.3) * (1 if randi() % 2 == 0 else -1),
@@ -30,5 +28,7 @@ func _physics_process(delta: float):
 
 func _on_area_entered(area: Area3D):
 	if area.is_in_group("bullet"):
+		StateManager.game_data.score += 100  # Increment score
+		StateManager.game_manager.update_hud()  # Update HUD
 		queue_free()
 		area.queue_free()

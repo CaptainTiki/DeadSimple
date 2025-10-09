@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwhb4hoocfcvh"]
+
+[ext_resource type="Script" uid="uid://1ybka2q40lf7" path="res://Enemies/enemyspawner.gd" id="1_5ugf6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5ugf6"]
+
+[sub_resource type="Curve3D" id="Curve3D_5ugf6"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1.4446545, 0, 0, 0, 0, 0, 0, 0, -2, 2.747896, 0, 0, 0, 0, 0, 0, 0, -3, 3.7821546, 0, 0, 0, 0, 0, 0, 0, -4, 4.4461894, 0, 0, 0, 0, 0, 0, 0, -5, 4.675, 0, 0, 0, 0, 0, 0, 0, -6, 4.4461894, 0, 0, 0, 0, 0, 0, 0, -7, 3.7821546, 0, 0, 0, 0, 0, 0, 0, -8, 2.747896, 0, 0, 0, 0, 0, 0, 0, -9, 1.4446545, 0, 0, 0, 0, 0, 0, 0, -10, 5.725035e-16, 0, 0, 0, 0, 0, 0, 0, -11, -1.4446545, 0, 0, 0, 0, 0, 0, 0, -12, -2.747896, 0, 0, 0, 0, 0, 0, 0, -13, -3.7821546, 0, 0, 0, 0, 0, 0, 0, -14, -4.4461894, 0, 0, 0, 0, 0, 0, 0, -15, -4.675, 0, 0, 0, 0, 0, 0, 0, -16, -4.4461894, 0, 0, 0, 0, 0, 0, 0, -17, -3.7821546, 0, 0, 0, 0, 0, 0, 0, -18, -2.747896, 0, 0, 0, 0, 0, 0, 0, -19, -1.4446545, 0, 0, 0, 0, 0, 0, 0, -20, -1.145007e-15, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 21
+
+[node name="Enemyspawner" type="Area3D"]
+collision_layer = 0
+collision_mask = 512
+script = ExtResource("1_5ugf6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5ugf6")
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0151901245, 0)
+size = Vector3(1, 0.12043762, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, -0.0053100586)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, 0.3126013)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, -0.3094956)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16072929, 0.024152756, -0.22657776)
+size = Vector3(1.1010742, 0.20106888, 0.22372437)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16072929, 0.024152756, 0.2456966)
+size = Vector3(1.1010742, 0.20106888, 0.22372437)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20223542, 0.056272835, 0)
+radius = 0.25
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_5ugf6")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

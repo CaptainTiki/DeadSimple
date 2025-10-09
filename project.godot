@@ -22,6 +22,11 @@ StateManager="*res://System/state_manager.gd"
 [global_group]
 
 bullet=""
+rock=""
+activation_area=""
+destruction_area=""
+playership=""
+enemyship=""
 
 [input]
 
@@ -66,4 +71,6 @@ fire={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="FriendlyProjectiles"
 3d_physics/layer_5="Enemies"
-3d_physics/layer_6="Terrain"
+3d_physics/layer_6="EnemyProjectiles"
+3d_physics/layer_9="Terrain"
+3d_physics/layer_10="Activations"
