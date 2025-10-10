@@ -28,6 +28,7 @@ activation_area=""
 destruction_area=""
 playership=""
 enemyship=""
+play_area=""
 
 [input]
 

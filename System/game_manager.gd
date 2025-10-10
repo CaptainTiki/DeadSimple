@@ -15,6 +15,10 @@ class_name GameManager
 @onready var time_label: Label = %TimeLabel
 @onready var score_label: Label = %ScoreLabel
 
+#DebugPanel
+@onready var debug_screen: Control = $CanvasLayer/DebugScreen
+@onready var bullet_count_lable: Label = $CanvasLayer/DebugScreen/PanelContainer/VBoxContainer/HBoxContainer/BulletCountLabel
+
 var level: PackedScene = preload("res://level_test.tscn") #TODO: need to setup way to pass which level to load here
 var current_level: Level = null
 var level_time: float = 0.0
@@ -56,6 +60,7 @@ func _process(delta: float):
 	if StateManager.current_state == StateManager.State.PLAY and not StateManager.is_paused:
 		level_time += delta
 		time_label.text = "Time: %.1fs" % level_time  # Update time separately
+		_run_debug(delta)
 
 func setup_hud()-> void:
 	if player_instance:
@@ -95,3 +100,12 @@ func _on_resume_pressed():
 func _on_quit_to_menu_pressed():
 	StateManager.unpause() #force unpause - no matter what state. 
 	StateManager.set_state(StateManager.State.MENU)
+
+
+######DEBUG######
+func _run_debug(_delta: float) -> void:
+	var active := 0
+	for b in current_level.bullets_node.get_children():
+		if b.visible:
+			active += 1
+	bullet_count_lable.text = str(active)

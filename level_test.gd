@@ -2,7 +2,7 @@ extends Node3D
 class_name Level
 
 @export var play_speed: float = 2.0
-@onready var play_area: Node3D = $PlayArea
+@onready var play_window: PlayWindow = $PlayWindow
 
 @onready var player: CharacterBody3D = %Player
 @onready var bullets_node: Node3D = $Bullets
@@ -23,7 +23,7 @@ func _physics_process(delta: float):
 	var current_speed = play_speed
 	if Input.is_action_pressed("boost"):
 		current_speed *= 1.5
-	play_area.position.x += current_speed * delta
+	play_window.position.x += current_speed * delta
 	
 	# Clamp player to play area bounds
 	var play_area_extents = Vector3(10, 5.5, 0.5)  # Half of BoxShape3D size (21, 12, 1)
