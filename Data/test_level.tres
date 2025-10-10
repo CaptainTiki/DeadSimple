@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SpawnSequence" load_steps=5 format=3 uid="uid://dxuaabmtxot6k"]
+
+[ext_resource type="Script" uid="uid://duogtao1wwnuo" path="res://Data/Spawns/spawn_entry.gd" id="1_y1705"]
+[ext_resource type="PackedScene" uid="uid://cmi1u0wejtvds" path="res://Objects/Obstacles/Rock.tscn" id="2_ta06r"]
+[ext_resource type="Script" uid="uid://ck36k2cxbbpln" path="res://Data/Spawns/spawn_sequence.gd" id="2_ubd7x"]
+
+[sub_resource type="Resource" id="Resource_y1705"]
+script = ExtResource("1_y1705")
+spawner_name = &"RightMid"
+delay_s = 1.0
+scene = ExtResource("2_ta06r")
+entry_style = 0
+speed = 0.0
+metadata/_custom_type_script = "uid://duogtao1wwnuo"
+
+[resource]
+script = ExtResource("2_ubd7x")
+entries = Array[ExtResource("1_y1705")]([SubResource("Resource_y1705")])
+metadata/_custom_type_script = "uid://ck36k2cxbbpln"

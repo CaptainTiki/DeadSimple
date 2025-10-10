@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://2gvh2l24pan6"]
+[gd_scene load_steps=14 format=3 uid="uid://2gvh2l24pan6"]
 
 [ext_resource type="Script" uid="uid://bedjtaany4nhl" path="res://level_test.gd" id="1_4xtnr"]
 [ext_resource type="PackedScene" uid="uid://d3iep2i6v0ovj" path="res://Player/player.tscn" id="2_6ih1o"]
 [ext_resource type="Texture2D" uid="uid://dov8y6iugkg0" path="res://Assets/backgrounds/Blue Nebula 8 - 1024x1024.png" id="2_hpvma"]
-[ext_resource type="PackedScene" uid="uid://cmi1u0wejtvds" path="res://Objects/Rock.tscn" id="3_56xti"]
 [ext_resource type="Script" uid="uid://d0ffo5w1hts86" path="res://System/play_window.gd" id="3_mge0y"]
-[ext_resource type="PackedScene" uid="uid://caoi4a5f65gvt" path="res://Objects/LargeRock.tscn" id="4_mge0y"]
+[ext_resource type="PackedScene" uid="uid://beawpbqi2iswl" path="res://System/spawn_manager.tscn" id="5_hpvma"]
+[ext_resource type="PackedScene" uid="uid://b5l6cmrty6fqt" path="res://System/spawner.tscn" id="6_hpvma"]
+[ext_resource type="Resource" uid="uid://dxuaabmtxot6k" path="res://Data/test_level.tres" id="6_k6i1l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6i1l"]
 albedo_texture = ExtResource("2_hpvma")
@@ -112,37 +113,25 @@ size = Vector3(1, 12, 22)
 [node name="Player" parent="PlayWindow" instance=ExtResource("2_6ih1o")]
 unique_name_in_owner = true
 
+[node name="SpawnManager" parent="PlayWindow" instance=ExtResource("5_hpvma")]
+sequence = ExtResource("6_k6i1l")
+
+[node name="RightHighCorner" parent="PlayWindow/SpawnManager" instance=ExtResource("6_hpvma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 6, 0)
+
+[node name="RightHigh" parent="PlayWindow/SpawnManager" instance=ExtResource("6_hpvma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 3, 0)
+
+[node name="RightMid" parent="PlayWindow/SpawnManager" instance=ExtResource("6_hpvma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="RightLow" parent="PlayWindow/SpawnManager" instance=ExtResource("6_hpvma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -3, 0)
+
+[node name="RightLowCorner" parent="PlayWindow/SpawnManager" instance=ExtResource("6_hpvma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -6, 0)
+
 [node name="Objects" type="Node3D" parent="."]
-
-[node name="Rock" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.714384, 1.4990778, 0)
-
-[node name="Rock2" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.340918, -3.2232294, 0)
-
-[node name="Rock3" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.628168, -1.3353801, 0)
-
-[node name="Rock4" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.89011, 2.7186732, 0)
-
-[node name="Rock5" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.14353, 2.7186732, 0)
-
-[node name="Rock6" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.779676, 0.902987, 0)
-
-[node name="Rock7" parent="Objects" instance=ExtResource("3_56xti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.754517, -3.231173, 0)
-
-[node name="LargeRock" parent="Objects" instance=ExtResource("4_mge0y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.897253, 0, 0)
-
-[node name="LargeRock2" parent="Objects" instance=ExtResource("4_mge0y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.82318, -4.129872, 0)
-
-[node name="LargeRock3" parent="Objects" instance=ExtResource("4_mge0y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.759712, -0.06489384, 0)
 
 [node name="Enemies" type="Node3D" parent="."]
 

@@ -1,6 +1,6 @@
 # res://Projectiles/Bullet.gd
 extends Area3D
-class_name Bullet
+class_name BulletBase
 
 @onready var play_window := get_tree().get_first_node_in_group("play_area") as PlayWindow
 

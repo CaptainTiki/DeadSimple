@@ -13,7 +13,7 @@ class_name PlayerShip
 
 var trigger_held: bool = false
 
-var bullet_scene = preload("res://Projectiles/bullet.tscn")
+var bullet_scene = preload("res://Projectiles/bullet_round.tscn")
 var time_since_last_shot: float = 0.0
 var current_shields: float = 100.0
 var current_health: float = 30.0

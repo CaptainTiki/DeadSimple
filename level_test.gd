@@ -9,7 +9,7 @@ class_name Level
 
 func _ready() -> void:
 	PoolManager.setup_bullets(
-		preload("res://Projectiles/bullet.tscn"),  # your bullet scene
+		preload("res://Projectiles/bullet_round.tscn"),  # your bullet scene
 		bullets_node,
 		200,    # initial bullets
 		600     # cap (0 = unlimited)

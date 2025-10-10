@@ -4,7 +4,7 @@ class_name Enemy
 @export var speed: float = 1.0
 @export var damage: float = 20.0
 @export var pause_delay: float = 0.0
-var play_speed: float = 2.0  # Match Level.play_speed
+var play_speed: float = 2.0  #we should get this from play_area - or spawner?
 var state: String = "pause"
 var pause_timer: float = 0.0
 

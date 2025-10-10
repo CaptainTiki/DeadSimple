@@ -1,7 +1,7 @@
 # res://System/pool_Manager.gd
 extends Node
 
-var _bullet_pool : Array[Bullet] = []             # Array of bullet nodes (inactive)
+var _bullet_pool : Array[BulletBase] = []             # Array of bullet nodes (inactive)
 var _scene: PackedScene     # Bullet scene to instance
 var _parent: Node           # Where bullets live in the tree
 var _max_size: int = 0      # 0 = unlimited
