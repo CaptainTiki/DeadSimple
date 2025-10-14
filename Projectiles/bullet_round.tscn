@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwa0qhvaty8tj"]
+
+[ext_resource type="Script" uid="uid://c0xk7dgeno1nu" path="res://Projectiles/bullet_base.gd" id="1_u28tj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m4n48"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="Bullet" type="Area3D" groups=["bullet"]]
+collision_layer = 2
+collision_mask = 131120
+script = ExtResource("1_u28tj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_m4n48")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(0.2, 0.2, 0.2)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

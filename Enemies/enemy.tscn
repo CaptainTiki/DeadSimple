@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhxtob7uordvc"]
+
+[ext_resource type="Script" uid="uid://bubf8b2rin05d" path="res://Enemies/enemy.gd" id="1_3ih25"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bxkaj"]
+size = Vector3(1.1567879, 0.5, 0.9141846)
+
+[node name="Enemy" type="Area3D" groups=["enemyship"]]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_3ih25")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12417793, 0, 0.01373291)
+shape = SubResource("BoxShape3D_bxkaj")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0151901245, 0)
+size = Vector3(1, 0.12043762, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, -0.0053100586)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, 0.3126013)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49563092, 0.018842697, -0.3094956)
+size = Vector3(0.13671875, 0.086200714, 0.21618652)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16072929, 0.024152756, -0.22657776)
+size = Vector3(1.1010742, 0.20106888, 0.22372437)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16072929, 0.024152756, 0.2456966)
+size = Vector3(1.1010742, 0.20106888, 0.22372437)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20223542, 0.056272835, 0)
+radius = 0.25
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

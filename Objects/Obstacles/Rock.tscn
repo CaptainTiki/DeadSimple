@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmi1u0wejtvds"]
+
+[ext_resource type="Script" uid="uid://bsv38ierybccq" path="res://Objects/Obstacles/rock.gd" id="1_ihx5k"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ihx5k"]
+radius = 0.55
+
+[node name="Rock" type="Area3D" groups=["rock"]]
+collision_layer = 256
+collision_mask = 3
+script = ExtResource("1_ihx5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ihx5k")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(0.5, 0.2, 0.3)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

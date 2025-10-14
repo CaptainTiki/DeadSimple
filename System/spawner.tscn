@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5l6cmrty6fqt"]
+
+[ext_resource type="Script" uid="uid://e7vydfk8kw8c" path="res://System/spawner.gd" id="1_pegks"]
+
+[node name="RightHighCorner" type="Marker3D"]
+script = ExtResource("1_pegks")
