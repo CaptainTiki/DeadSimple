@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://jn1rir0ekg86"]
+
+[ext_resource type="Script" uid="uid://bck6y5i17jwcb" path="res://Player/engine_fx.gd" id="1_2p0pg"]
+
+[sub_resource type="Curve" id="Curve_ktqpj"]
+_data = [Vector2(0, 0), 0.0, 3.5371664, 0, 0, Vector2(0.24738678, 1), 0.0, 0.0, 0, 0, Vector2(0.9965157, 0), -0.22961812, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2p0pg"]
+curve = SubResource("Curve_ktqpj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6xi5c"]
+direction = Vector3(0, -1, 0)
+spread = 9.87
+initial_velocity_min = 2.5
+initial_velocity_max = 6.0
+gravity = Vector3(0, 0, 0)
+damping_max = 2.0
+scale_min = 0.59999996
+scale_max = 1.8
+scale_curve = SubResource("CurveTexture_2p0pg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpgpg"]
+shading_mode = 0
+albedo_color = Color(0.8097156, 0.57895947, 1.92523e-07, 1)
+billboard_mode = 2
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_l7srq"]
+material = SubResource("StandardMaterial3D_vpgpg")
+size = Vector2(0.1, 0.15)
+
+[sub_resource type="Gradient" id="Gradient_h0j16"]
+colors = PackedColorArray(0.9931131, 1, 0.5880488, 1, 1, 1, 0.34117648, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_854xa"]
+gradient = SubResource("Gradient_h0j16")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qbr22"]
+direction = Vector3(0, -1, 0)
+spread = 64.97
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+damping_max = 1.0
+scale_min = 0.099999994
+scale_max = 0.25
+color_ramp = SubResource("GradientTexture1D_854xa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aalvk"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+disable_receive_shadows = true
+billboard_mode = 2
+billboard_keep_scale = true
+grow_amount = -1.571
+
+[sub_resource type="QuadMesh" id="QuadMesh_bwn4s"]
+material = SubResource("StandardMaterial3D_aalvk")
+size = Vector2(0.15, 0.1)
+
+[node name="EngineFX" type="Node3D"]
+script = ExtResource("1_2p0pg")
+base_vel = Vector2(2.5, 3.5)
+base_scale = Vector2(0.3, 0.75)
+boost_scale = Vector2(0.8, 1)
+base_amount = 60
+boost_amount = 100
+
+[node name="FlameCore" type="GPUParticles3D" parent="."]
+amount = 140
+lifetime = 0.08
+preprocess = 0.15
+process_material = SubResource("ParticleProcessMaterial_6xi5c")
+draw_pass_1 = SubResource("QuadMesh_l7srq")
+
+[node name="ExhaustSparks" type="GPUParticles3D" parent="."]
+amount = 30
+lifetime = 0.05
+preprocess = 0.1
+process_material = SubResource("ParticleProcessMaterial_qbr22")
+draw_pass_1 = SubResource("QuadMesh_bwn4s")
+
+[node name="ThrustGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.08332747)
+light_color = Color(0.91400385, 0.8984829, 0, 1)

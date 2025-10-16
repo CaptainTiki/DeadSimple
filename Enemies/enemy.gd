@@ -26,7 +26,7 @@ func _physics_process(delta: float):
 			queue_free()
 
 func _on_area_entered(area: Area3D):
-	if area.is_in_group("bullet"):
+	if area.is_in_group("player_bullet"):
 		StateManager.game_data.score += 150
 		StateManager.game_manager.update_hud()
 		queue_free()

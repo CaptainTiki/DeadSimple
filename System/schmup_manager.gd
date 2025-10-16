@@ -54,7 +54,7 @@ func Setup():
 	hud.visible = true
 	current_level = level.instantiate() as Level
 	add_child(current_level)
-	StateManager.game_data.score = 0
+	current_level.score = 0
 	player_instance = current_level.player
 	setup_hud()
 
@@ -78,7 +78,7 @@ func update_hud():
 		health_bar.value = player_instance.current_health
 		shields_bar.value = player_instance.current_shields
 		power_bar.value = 0.0  # Placeholder until power implemented
-	score_label.text = "Score: %d" % StateManager.game_data.score
+	score_label.text = "Score: %d" % current_level.score
 
 func _input(event):
 	if StateManager.get_current_state() == StateManager.State.SCHMUP and event.is_action_pressed("ui_cancel"):

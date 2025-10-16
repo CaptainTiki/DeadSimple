@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://fg8iwwpsb4cn"]
 
-[ext_resource type="Script" uid="uid://b36et2h2m7i8h" path="res://System/invaders_manager.gd" id="1_htk2m"]
+[ext_resource type="Script" uid="uid://b36et2h2m7i8h" path="res://Invaders/invaders_manager.gd" id="1_htk2m"]
 [ext_resource type="Texture2D" uid="uid://bc104x8man7vs" path="res://Assets/Textures/Full_Heart.png" id="2_tfq04"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfq04"]

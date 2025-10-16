@@ -22,13 +22,14 @@ PoolManager="*res://System/pool_manager.gd"
 
 [global_group]
 
-bullet=""
 rock=""
 activation_area=""
 destruction_area=""
 playership=""
 enemyship=""
 play_area=""
+player_bullet=""
+enemy_bullet=""
 
 [input]
 

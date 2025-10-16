@@ -24,9 +24,7 @@ class_name InvadersManager
 
 var player_instance: PlayerShip = null
 
-var level_time: float = 0.0
-var current_score : int = 0
-var level: PackedScene = preload("res://invaders_level.tscn")
+var level: PackedScene = preload("res://Invaders/invaders_level.tscn")
 var current_level: InvadersLevel = null
 
 func _ready():
@@ -42,27 +40,25 @@ func clean():
 	pause_menu.visible = false
 	score_sheet.visible = false
 	hud.visible = false
-	level_time = 0.0
 
 func Setup():
 	hud.visible = true
 	current_level = level.instantiate() as InvadersLevel
 	add_child(current_level)
-	StateManager.game_data.score = 0
+	current_level.score = 0
 	player_instance = current_level.player
 	setup_hud()
 
 func _process(delta: float):
 	if StateManager.current_state == StateManager.State.SCHMUP and not StateManager.is_paused:
-		level_time += delta
-		time_label.text = "Time: %.1fs" % level_time  # Update time separately
+		time_label.text = "Time: %.1fs" % current_level.level_time  # Update time separately
 		_run_debug(delta)
 
 func setup_hud()-> void:
 	pass
 
 func update_hud():
-	score_label.text = "Score: %d" % current_score
+	score_label.text = "Score: %d" % current_level.score
 
 func _input(event):
 	if StateManager.get_current_state() == StateManager.State.INVADERS and event.is_action_pressed("ui_cancel"):

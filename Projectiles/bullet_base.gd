@@ -42,7 +42,7 @@ func _pool_release() -> void:
 	# clean & park
 	set_physics_process(false)
 	visible = false
-	monitorable= false
+	monitorable = false
 	velocity = Vector3.ZERO
 	rotation = Vector3.UP
 	global_position = Vector3(-99999,-99999, -99999)

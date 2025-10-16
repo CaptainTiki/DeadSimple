@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://2esgv8dvrws7"]
+
+[ext_resource type="Script" uid="uid://cabinjva4exo1" path="res://Invaders/invaders_level.gd" id="1_3dycf"]
+[ext_resource type="Script" uid="uid://d0ffo5w1hts86" path="res://System/play_window.gd" id="2_0o356"]
+[ext_resource type="Texture2D" uid="uid://dov8y6iugkg0" path="res://Assets/backgrounds/Blue Nebula 8 - 1024x1024.png" id="2_at4cf"]
+[ext_resource type="Script" uid="uid://7k2djxpw7441" path="res://Invaders/formation_controller.gd" id="2_gl2xu"]
+[ext_resource type="PackedScene" uid="uid://d3iep2i6v0ovj" path="res://Player/player.tscn" id="3_at4cf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uj3ft"]
+size = Vector3(22, 12, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_svhfq"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_feb5d"]
+sky_material = SubResource("ProceduralSkyMaterial_svhfq")
+
+[sub_resource type="Environment" id="Environment_n1ylm"]
+background_energy_multiplier = 1.18
+sky = SubResource("Sky_feb5d")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6i1l"]
+albedo_texture = ExtResource("2_at4cf")
+
+[sub_resource type="QuadMesh" id="QuadMesh_46pp8"]
+material = SubResource("StandardMaterial3D_k6i1l")
+size = Vector2(300, 300)
+
+[node name="InvadersLevel" type="Node3D"]
+script = ExtResource("1_3dycf")
+
+[node name="FormationController" type="Node3D" parent="."]
+script = ExtResource("2_gl2xu")
+offscreen_x = -2.0
+per_invader_delay = 0.01
+per_column_delay = 0.2
+camera_path = NodePath("../PlayWindow/Camera3D")
+move_step_x = 0.5
+speedup_factor = 1.5
+
+[node name="PlayWindow" type="Node3D" parent="." groups=["play_area"]]
+script = ExtResource("2_0o356")
+
+[node name="PlayArea" type="Area3D" parent="PlayWindow"]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayWindow/PlayArea"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+shape = SubResource("BoxShape3D_uj3ft")
+debug_color = Color(0.6156863, 1, 0, 0.41960785)
+
+[node name="Camera3D" type="Camera3D" parent="PlayWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.45)
+current = true
+fov = 50.0
+size = 12.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PlayWindow"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+visible = false
+size = Vector3(1, 12, 22)
+
+[node name="Player" parent="PlayWindow" instance=ExtResource("3_at4cf")]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -4.9451485, 0)
+
+[node name="Enviroment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
+environment = SubResource("Environment_n1ylm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Enviroment"]
+transform = Transform3D(0.61483604, -0.6829953, 0.39432746, 0.083709925, 0.55369246, 0.8285031, -0.7841999, -0.47638446, 0.39760357, 0, 0, 41.830757)
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Enviroment"]
+transform = Transform3D(0.78324527, 0.6171201, -0.07542992, -0.6173439, 0.7576373, -0.21183029, -0.07357642, 0.21248117, 0.9743914, -12.599536, 0, 41.830757)
+light_color = Color(0.509675, 0.5720238, 0.98662096, 1)
+light_energy = 0.25
+shadow_enabled = true
+
+[node name="Background" type="Node3D" parent="Enviroment"]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.85267, 0, -104.76244)
+radius = 30.0
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.01405, 0, -40.3162)
+radius = 2.0
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5107117, 3.8114223, -46.171867)
+radius = 2.0
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.24958, -10.611922, -37.424)
+radius = 2.0
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.80927, 2.3969183, -51.772224)
+radius = 2.0
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.59627, -7.1150036, -43.766876)
+radius = 2.0
+radial_segments = 16
+rings = 8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviroment/Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -147.13025)
+mesh = SubResource("QuadMesh_46pp8")
+
+[node name="Bullets" type="Node3D" parent="."]

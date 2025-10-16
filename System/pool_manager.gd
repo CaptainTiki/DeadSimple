@@ -19,6 +19,7 @@ func register(nodetype: String, scene: PackedScene, parent: Node = null, prewarm
 		var n := scene.instantiate() as Node3D
 		n.visible = false
 		n.set_physics_process(false)
+		n.global_position = Vector3(9999,9999,9999)
 		parents[nodetype].add_child(n)
 		pool[nodetype].append(n)
 

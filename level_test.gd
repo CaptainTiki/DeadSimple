@@ -9,9 +9,11 @@ class_name Level
 
 const BULLET_ROUND = preload("uid://dwa0qhvaty8tj")
 
+var score : int = 0
 
 func _ready() -> void:
 	PoolManager.register("BulletRound", BULLET_ROUND, bullets_node, 1000)
+	player.configure_roll_profile(1) #invaders = 0, schmup = 1
 
 func _physics_process(delta: float):
 	if StateManager.is_paused:

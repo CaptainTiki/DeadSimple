@@ -4,3 +4,5 @@
 
 [node name="SpawnManager" type="Node3D"]
 script = ExtResource("1_tvqhx")
+
+[node name="Enemies" type="Node3D" parent="."]

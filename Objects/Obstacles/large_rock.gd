@@ -22,7 +22,7 @@ func _physics_process(delta: float):
 	rotate_z(angular_velocity.z * delta)
 
 func _on_area_entered(area: Area3D):
-	if area.is_in_group("bullet"):
+	if area.is_in_group("player_bullet"):
 		health -= 1
 		if area is Bullet:
 			area._despawn()

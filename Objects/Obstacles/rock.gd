@@ -27,9 +27,9 @@ func _physics_process(delta: float):
 	rotate_z(angular_velocity.z * delta)
 
 func _on_area_entered(area: Area3D):
-	if area.is_in_group("bullet"):
-		StateManager.game_data.score += 100  # Increment score
-		StateManager.schmup_manager.update_hud()  # Update HUD
+	if area.is_in_group("player_bullet"):
+		StateManager.current_manager.current_level.score += 100  # Increment score
+		StateManager.current_manager.update_hud()  # Update HUD
 		queue_free()
 		if area is BulletBase:
 			area.despawn()

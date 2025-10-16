@@ -6,3 +6,6 @@ func _input(event):
 		StateManager.set_state(StateManager.State.MENU)
 		await get_tree().process_frame  # let StateManager add the menu manager
 		queue_free()
+
+func Setup() -> void:
+	pass

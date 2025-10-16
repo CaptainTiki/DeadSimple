@@ -3,11 +3,9 @@ class_name MenuManager
 
 var current_menu: Node = null
 var menu_stack: Array[Node] = []
-
 var main_menu: PackedScene = preload("res://System/Menus/MainMenu.tscn")
 
 func Setup():
-	print("opening main menu")
 	push_menu(main_menu.instantiate())
 	pass
 
