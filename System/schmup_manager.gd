@@ -1,5 +1,5 @@
 extends Node
-class_name GameManager
+class_name SchmupManager
 
 #Menus
 @onready var pause_menu: Control = %PauseMenu
@@ -19,7 +19,7 @@ class_name GameManager
 @onready var debug_screen: Control = $CanvasLayer/DebugScreen
 @onready var bullet_count_lable: Label = $CanvasLayer/DebugScreen/PanelContainer/VBoxContainer/HBoxContainer/BulletCountLabel
 
-var level: PackedScene = preload("res://level_test.tscn") #TODO: need to setup way to pass which level to load here
+var level: PackedScene = preload("res://level_test.tscn")
 var current_level: Level = null
 var level_time: float = 0.0
 var player_instance: PlayerShip = null
@@ -47,8 +47,10 @@ func clean():
 	hud.visible = false
 	level_time = 0.0
 	player_instance = null
+	set_process(false)
 
 func Setup():
+	set_process(true)
 	hud.visible = true
 	current_level = level.instantiate() as Level
 	add_child(current_level)
@@ -57,7 +59,7 @@ func Setup():
 	setup_hud()
 
 func _process(delta: float):
-	if StateManager.current_state == StateManager.State.PLAY and not StateManager.is_paused:
+	if StateManager.current_state == StateManager.State.SCHMUP and not StateManager.is_paused:
 		level_time += delta
 		time_label.text = "Time: %.1fs" % level_time  # Update time separately
 		_run_debug(delta)
@@ -79,7 +81,7 @@ func update_hud():
 	score_label.text = "Score: %d" % StateManager.game_data.score
 
 func _input(event):
-	if StateManager.get_current_state() == StateManager.State.PLAY and event.is_action_pressed("ui_cancel"):
+	if StateManager.get_current_state() == StateManager.State.SCHMUP and event.is_action_pressed("ui_cancel"):
 		StateManager.toggle_pause()
 
 func pop_ScoreSheet() -> void:
@@ -90,7 +92,7 @@ func _on_pause_toggled(is_paused: bool):
 	pause_menu.visible = is_paused
 
 func _on_state_changed(new_state: StateManager.State):
-	if new_state != StateManager.State.PLAY:
+	if new_state != StateManager.State.SCHMUP:
 		clean()
 
 func _on_resume_pressed():

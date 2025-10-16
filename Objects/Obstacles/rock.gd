@@ -29,7 +29,7 @@ func _physics_process(delta: float):
 func _on_area_entered(area: Area3D):
 	if area.is_in_group("bullet"):
 		StateManager.game_data.score += 100  # Increment score
-		StateManager.game_manager.update_hud()  # Update HUD
+		StateManager.schmup_manager.update_hud()  # Update HUD
 		queue_free()
 		if area is BulletBase:
-			area._despawn()
+			area.despawn()

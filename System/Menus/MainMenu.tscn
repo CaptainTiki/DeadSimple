@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://clctxc3qgeiht"]
+[gd_scene load_steps=3 format=3 uid="uid://clctxc3qgeiht"]
 
 [ext_resource type="Script" uid="uid://dohwqmia75xhg" path="res://System/Menus/main_menu.gd" id="1_1y61e"]
+[ext_resource type="LabelSettings" uid="uid://ds3njm753oe4e" path="res://Assets/Fonts/MainTitleLableSettings.tres" id="2_1rve5"]
 
 [node name="MainMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,31 +14,69 @@ grow_vertical = 2
 script = ExtResource("1_1y61e")
 
 [node name="Menu" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 535.0
-offset_top = 271.0
-offset_right = 577.0
-offset_bottom = 337.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayButton" type="Button" parent="Menu/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Menu/HBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="Menu/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="QuitButton" type="Button" parent="Menu/VBoxContainer"]
+[node name="Invaders" type="Button" parent="Menu/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Invaders"
+
+[node name="QuitButton" type="Button" parent="Menu/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="Menu/VBoxContainer/PlayButton" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Menu/VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Menu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Menu/HBoxContainer/HBoxContainer2/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Menu/HBoxContainer/HBoxContainer2/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/HBoxContainer/HBoxContainer2/PanelContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "DeadSimple"
+label_settings = ExtResource("2_1rve5")
+
+[connection signal="pressed" from="Menu/HBoxContainer/PanelContainer/VBoxContainer/PlayButton" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/PanelContainer/VBoxContainer/Invaders" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/PanelContainer/VBoxContainer/Invaders" to="." method="_on_invaders_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]

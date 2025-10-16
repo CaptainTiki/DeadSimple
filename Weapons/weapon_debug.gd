@@ -2,6 +2,8 @@
 extends Weapon
 
 @export var bullet_type : String = "BulletRound"
+@export var bullet_spread_angle : float = 5.0
+@export var bullet_count : int = 100
 
 func set_trigger(pressed: bool, delta: float) -> void:
 	_trigger = pressed
@@ -17,9 +19,13 @@ func fire() -> void:
 			_spawn_bullet(m, forward, bullet_speed)
 
 func _spawn_bullet(from_marker: Marker3D, dir: Vector3, speed: float) -> void:
-	var bullet: BulletBase = PoolManager.acquire("BulletRound") as BulletBase
-	bullet._pool_setup()
-	if bullet == null:
-		return
-	var origin: Vector3 = from_marker.global_transform.origin
-	bullet.call("fire", origin, dir.normalized() * speed)
+	
+	var rad_angle : float = deg_to_rad(bullet_spread_angle)
+	var angle : float = -rad_angle * bullet_count * 0.5
+	
+	for i in bullet_count:
+		var b : BulletBase = PoolManager.acquire("BulletRound") as BulletBase
+		b._pool_setup()
+		var origin: Vector3 = from_marker.global_transform.origin
+		b.call("fire", origin, dir.rotated(Vector3(0,0,1),angle) * speed)
+		angle += rad_angle

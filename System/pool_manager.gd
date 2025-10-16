@@ -1,55 +1,67 @@
-# res://System/pool_Manager.gd
+# pool_manager.gd
 extends Node
+class_name Pool_Manager
 
-var _bullet_pool : Array[BulletBase] = []             # Array of bullet nodes (inactive)
-var _scene: PackedScene     # Bullet scene to instance
-var _parent: Node           # Where bullets live in the tree
-var _max_size: int = 0      # 0 = unlimited
+# Buckets of available nodes per type (values are plain Array to avoid nested generic typing)
+var pool: Dictionary[String, Array] = {}
+# Registry of what to instantiate
+var registry: Dictionary[String, PackedScene] = {}
+# Where to park pooled nodes in the tree
+var parents: Dictionary[String, Node] = {}
 
-func setup_bullets(scene: PackedScene, parent: Node, initial: int, max_size: int = 0) -> void:
-	_scene = scene
-	_parent = parent
-	_max_size = max_size
-	_bullet_pool.clear()
-	for i in range(initial):
-		var b := _scene.instantiate()
-		_prep_for_pool(b)
-		_bullet_pool.append(b)
+func register(nodetype: String, scene: PackedScene, parent: Node = null, prewarm: int = 0) -> void:
+	if not pool.has(nodetype):
+		pool[nodetype] = []
+	registry[nodetype] = scene
+	parents[nodetype] = parent if parent != null else self
 
-func acquire_bullet() -> Node:
-	if _bullet_pool.size() > 0:
-		return _bullet_pool.pop_back()
-	if _max_size == 0 or _active_count() < _max_size:
-		var b := _scene.instantiate()
-		_prep_for_pool(b)
-		return b
-	return null  # at cap → caller should skip this frame
-
-func release(node: Node) -> void:
-	if node == null:
-		return
-	if node.has_method("reset_for_pool"):
-		node.call("reset_for_pool")
-	if node is CanvasItem:
-		(node as CanvasItem).visible = false
-	if node.has_method("set_physics_process"):
-		node.set_physics_process(false)
-	if node.has_method("set_monitoring"):
-		node.set_deferred("monitoring", false)
-	_bullet_pool.append(node)
-
-func _prep_for_pool(n: Node) -> void:
-	if n is CanvasItem:
-		(n as CanvasItem).visible = false
-	if n.has_method("set_physics_process"):
+	for i in prewarm:
+		var n := scene.instantiate() as Node3D
+		n.visible = false
 		n.set_physics_process(false)
-	_parent.add_child(n)
-	if n.has_method("reset_for_pool"):
-		n.call("reset_for_pool")
+		parents[nodetype].add_child(n)
+		pool[nodetype].append(n)
 
-func _active_count() -> int:
-	var count := 0
-	for c in _parent.get_children():
-		if c is CanvasItem and (c as CanvasItem).visible:
-			count += 1
-	return count
+func acquire(nodetype: String) -> Node3D:
+	if not registry.has(nodetype):
+		push_error("Pool: unknown nodetype '%s'" % nodetype)
+		return null
+	if not pool.has(nodetype):
+		pool[nodetype] = []
+
+	var bucket: Array = pool[nodetype]
+	var node: Node3D = null
+
+	# pull from bucket or make new
+	while bucket.size() > 0 and node == null:
+		var candidate = bucket.pop_back()
+		if is_instance_valid(candidate):
+			node = candidate as Node3D
+	# instantiate if needed
+	if node == null:
+		node = registry[nodetype].instantiate() as Node3D
+		parents[nodetype].add_child(node)
+
+	# node handles its own setup
+	if "pool_setup" in node:
+		node.pool_setup()
+
+	return node
+
+func release(nodetype: String, node: Node3D) -> void:
+	if node == null or not is_instance_valid(node):
+		return
+	# node handles its own teardown
+	if "pool_release" in node:
+		node.pool_release()
+	if not pool.has(nodetype):
+		pool[nodetype] = []
+	pool[nodetype].append(node)
+
+func active(nodetype: String) -> int:
+	if not parents.has(nodetype):
+		return 0
+	# Active = children parked under parent minus available in bucket
+	var total := parents[nodetype].get_child_count()
+	var available := pool[nodetype].size() if pool.has(nodetype) else 0
+	return total - available

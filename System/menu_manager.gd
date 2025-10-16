@@ -7,15 +7,14 @@ var menu_stack: Array[Node] = []
 var main_menu: PackedScene = preload("res://System/Menus/MainMenu.tscn")
 
 func Setup():
+	print("opening main menu")
+	push_menu(main_menu.instantiate())
 	pass
 
 func clean():
 	if current_menu:
 		current_menu.queue_free()
 		current_menu = null
-
-func open_main_menu():
-	push_menu(main_menu.instantiate())
 
 func push_menu(menu: Node):
 	if current_menu:

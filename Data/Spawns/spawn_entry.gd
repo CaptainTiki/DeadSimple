@@ -1,5 +1,5 @@
 # res://data/spawns/Spawn_Entry.gd
-@icon("res://Assets/icon.svg")
+@icon("res://Assets/Spawn_Icon.svg")
 extends Resource
 class_name SpawnEntry
 
@@ -13,3 +13,4 @@ enum Behavior { NONE, RAM_PLAYER }
 @export var entry_style: EntryStyle = EntryStyle.SLIDE_ONLY
 @export var behavior: Behavior = Behavior.NONE
 @export var speed: float = 6.0                  # optional param for movers
+ 
